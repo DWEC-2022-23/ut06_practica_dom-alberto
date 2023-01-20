@@ -62,17 +62,17 @@ button + button {
 p + button {
   background: #52bab3;
 }
-.list button + button {
+.lista button + button {
   background: #768da3;
 }
-.list li button + button {
+.lista li button + button {
   background: #508abc;
 }
 li button:first-child {
   margin-left: auto;
   background: #52bab3;
 }
-.list li button:last-child {
+.lista li button:last-child {
   background: #768da3;
 }
 li button {

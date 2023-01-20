@@ -1,0 +1,15 @@
+div#mainBox {
+    width: 100px;
+    padding: 10px;
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+p:first-of-type {
+    margin-top: 0;
+}
+
+div#mainBox.black {
+    color: #FFFFFF;
+    background-color: #000000;
+}

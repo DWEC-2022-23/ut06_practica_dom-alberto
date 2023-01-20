@@ -9,8 +9,8 @@ let addItemInput = "";
 let addItemButton = "";
 
 
- window.addEventListener("load",iniciar);
- function iniciar(){
+window.addEventListener("load", iniciar);
+function iniciar() {
   listDiv = document.querySelector('.list');
   listUl = listDiv.querySelector('ul');
   lis = listUl.children;
@@ -22,45 +22,96 @@ let addItemButton = "";
   addItemButton = document.querySelector('button.addItemButton');
 
   for (let i = 0; i < lis.length; i += 1) {
-     attachListItemButtons(lis[i]);
-    }
-  listUl.addEventListener('click', crearbotones); 
+    attachListItemButtons(lis[i]);
+  }
+  listUl.addEventListener('click', crearbotones);
   toggleList.addEventListener('click', MostrarOcultarLista);
-  descriptionButton.addEventListener('click', CambiarTextoLista); 
-  addItemButton.addEventListener('click', AñadirElemento); 
+  descriptionButton.addEventListener('click', CambiarTextoLista);
+  addItemButton.addEventListener('click', AñadirElemento);
 }
- 
- function attachListItemButtons(li) {
-   let subir = document.createElement('button');
-   subir.className = 'subir';
-   subir.textContent = 'subir';
-   li.appendChild(subir);
 
-   let bajar = document.createElement('button');
-   bajar.className = 'bajar';
-   bajar.textContent = 'bajar';
-   li.appendChild(bajar);  
+function attachListItemButtons(li) {
+  let subir = document.createElement('button');
+  subir.className = 'subir';
+  subir.textContent = 'subir';
+  li.appendChild(subir);
 
-   let borrar = document.createElement('button');
-   borrar.className = 'borrar';
-   borrar.textContent = 'borrar';
-   li.appendChild(borrar);
- }
+  let bajar = document.createElement('button');
+  bajar.className = 'bajar';
+  bajar.textContent = 'bajar';
+  li.appendChild(bajar);
 
- function crearbotones(event) {
+  let borrar = document.createElement('button');
+  borrar.className = 'borrar';
+  borrar.textContent = 'borrar';
+  li.appendChild(borrar);
+}
+
+function crearbotones(event) {
   // Realiza las acciones de los botones subir, borrar y bajar para los elementos de la lista
- }
+  
+  if (event.target.tagName != 'BUTTON') {
+    return;
+  }
+  
+  let thisElement = event.target.parentNode;
+  
+  switch (event.target.textContent) {
+    case 'subir':
+      if (thisElement.parentNode.firstChild === thisElement) {
+        return;
+      }  
+      
+      thisElement.parentNode.insertBefore(thisElement, thisElement.previousSibling);
+      break;
+    case 'bajar':
+      if (thisElement.parentNode.lastChild === thisElement) {
+        return;
+      } 
+      
+      thisElement.parentNode.insertBefore(thisElement, thisElement.nextSibling.nextSibling);
+      break;
+    case 'borrar':
+      event.target.parentElement.remove();
+      break;
+  }
+}
 
- function MostrarOcultarLista(){
+function MostrarOcultarLista() {
   // Muestra u oculta la información de las cosas que son violeta (listDiv)
- }
- function CambiarTextoLista(){
+  
+  if (listDiv.style.display != 'none') {
+    listDiv.style.display = 'none';
+  } else {
+    listDiv.style.display = 'block';
+  }
+}
+function CambiarTextoLista() {
   //Modifica  el texto de la lista (descriptionP) con el valor del input (descriptionInput).
   // Inicialmente COSAS QUE SON VIOLETA
- }
- function AñadirElemento(){
+  
+  if (!descriptionInput.value) {
+    return;
+  }
+  
+  descriptionP.textContent = descriptionInput.value + ':';
+  
+  descriptionInput.value = '';
+}
+function AñadirElemento() {
   //Añade un nuevo elemento a la lista con el valor del input (addItemInput). 
   //Recuerda que el elemento tendrá que tener sus botones de subir, bajar y borrar.
- }
-
-
+  
+  if (!addItemInput.value) {
+    return;
+  }
+  
+  var newElement = document.createElement('li');
+  newElement.innerText = addItemInput.value;
+  
+  attachListItemButtons(newElement);
+  
+  addItemInput.value = '';
+  
+  document.getElementsByTagName('ul')[0].appendChild(newElement);
+}
